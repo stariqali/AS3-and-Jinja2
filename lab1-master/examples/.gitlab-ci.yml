@@ -1,0 +1,20 @@
+stages:
+    - Requirements
+    - Configure_LTM
+    - Test_LTM
+
+Requirements:
+    stage: Requirements
+    script:
+        - ansible-galaxy collection install -r 1-requirements.yml
+
+Deploy_LTM:
+    stage: Configure_LTM
+    script:
+        - ansible-playbook 2-config-ltm.yml -vvv
+
+Test_LTM:
+    stage: Test_LTM
+    script:
+        - ansible-playbook 3-test-ltm.yml -vvv
+

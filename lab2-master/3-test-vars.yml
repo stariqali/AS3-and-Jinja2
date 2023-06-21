@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  connection: local
+  vars_files:
+    - vars.yml
+  gather_facts: false
+  tasks:
+
+    - name: Check that a page returns what it should
+      uri:
+        url: "http://{{ item.vsip }}{{ item.monurl }}"
+        return_content: true
+      register: request
+      # until: request.status == 200
+      until: "'{{ item.monreceive }}' in request.content"
+      retries: 15
+      delay: 10
+      with_items:
+        - "{{ apps }}"

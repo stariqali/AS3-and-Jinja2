@@ -1,0 +1,43 @@
+{
+  "class": "AS3",
+  "action": "deploy",
+  "persist": true,
+  "declaration": {
+    "class": "ADC",
+    "schemaVersion": "3.22.0",
+    "id": "id",
+    "label": "WebApp",
+    "ansible": {
+      "class": "Tenant",
+      "WebGoat-app": {
+        "class": "Application",
+        "WebGoat-svc": {
+          "class": "Service_HTTP",
+          "virtualAddresses": [
+            "10.1.10.100"
+            ],
+          "virtualPort": 80,
+          "pool": "WebGoat_pool"
+        },
+        "WebGoat_pool": {
+          "class": "Pool",
+          "monitors": [{"use": "http_mon"}],
+          "members": [
+            {
+              "servicePort": 8080,
+              "serverAddresses": [
+                "10.1.10.10"
+              ]
+            }
+          ]
+        },
+        "http_mon": {
+            "class": "Monitor",
+            "monitorType": "http",
+            "send":"GET /WebGoat/login HTTP/1.1\r\nHost: apps.lab\r\nConnection: Close\r\n\r\n",
+            "receive": "Sign in"
+        }
+      }
+    }
+  }
+}

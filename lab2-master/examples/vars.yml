@@ -1,0 +1,12 @@
+partition: lab2
+apps:
+      - name: webgoat
+        vsip: 10.1.10.101
+        vsport: 80
+        memberport: 8080
+        monurl: '/WebGoat/login'
+        monreceive: 'Sign in'
+        poolname: webgoat_pool
+        members:
+          - 10.1.10.11
+          - 10.1.10.12

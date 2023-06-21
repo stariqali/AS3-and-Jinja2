@@ -1,0 +1,20 @@
+---
+- name: deploy AS3
+  hosts: bigip1
+  vars:
+    ansible_user: "admin"
+    ansible_httpapi_password: "heslohesel123"
+    ansible_httpapi_port: "443"
+    ansible_network_os: f5networks.f5_bigip.bigip
+    ansible_httpapi_use_ssl: yes
+    ansible_httpapi_validate_certs: false
+    ansible_command_timeout: 1800
+    ansible_httpapi_use_proxy: false
+  connection: httpapi
+  gather_facts: false
+
+  tasks:   
+
+    - name: Deploy or Update
+      f5networks.f5_bigip.bigip_as3_deploy:
+          content: "{{ lookup('file', '2-as3.json') }}"

@@ -1,0 +1,12 @@
+partition: lab3
+apps:
+      - name: petstore
+        vsip: 10.1.10.105
+        vsport: 80
+        memberport: 8181
+        monurl: '/v2/user/logout'
+        monreceive: '200'
+        poolname: petstore_pool
+        members:
+          - 10.1.10.15
+          - 10.1.10.16

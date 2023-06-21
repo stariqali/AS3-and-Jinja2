@@ -1,0 +1,14 @@
+
+---
+- name: deploy AS3
+  hosts: bigips
+  vars_files:
+    - vars.yml
+  connection: httpapi
+  gather_facts: false
+
+  tasks:   
+
+    - name: Deploy or Update
+      f5networks.f5_bigip.bigip_as3_deploy:
+          content: "{{ lookup('template', 'as3-templ.json') }}"

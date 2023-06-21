@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+
+# WebGoat normal content check
+    - name: Check that a page returns a status 200 and fail if the words Register new user are not in the page contents
+      uri:
+        url: "http://10.1.10.100/WebGoat/login"
+        return_content: true
+      register: request
+      until: "'Register new user' in request.content"
+      retries: 15
+      delay: 10
+
